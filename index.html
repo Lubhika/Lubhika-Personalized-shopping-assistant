@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personalized Shopping Assistant</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Personalized Shopping Assistant</h1>
+
+        <!-- Add Item -->
+        <form action="/add" method="POST">
+            <input type="text" name="item" placeholder="Enter item name" required>
+            <input type="number" step="0.01" name="cost" placeholder="Enter item cost" required>
+            <button type="submit">Add Item</button>
+        </form>
+
+        <!-- Remove Item -->
+        <form action="/remove" method="POST">
+            <input type="text" name="item" placeholder="Enter item to remove" required>
+            <button type="submit">Remove Item</button>
+        </form>
+
+        <!-- View List Button -->
+        <form action="/view" method="GET">
+            <button type="submit">View List</button>
+        </form>
+
+        <!-- View Total Cost Button -->
+        <form action="/total" method="GET">
+            <button type="submit">View Total Cost</button>
+        </form>
+
+        <!-- Sort Items -->
+        <form action="/sort" method="POST">
+            <select name="sort_by">
+                <option value="Item">Sort by Item</option>
+                <option value="Cost">Sort by Cost</option>
+            </select>
+            <button type="submit">Sort Items</button>
+        </form>
+
+        <!-- Display Items -->
+        {% if items %}
+            <h2>Shopping List</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Item</th>
+                        <th>Cost</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in items %}
+                    <tr>
+                        <td>{{ item['Item'] }}</td>
+                        <td>${{ item['Cost'] }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+
+        <!-- Display Total Cost -->
+        {% if total_cost %}
+            <h2>Total Cost: ${{ total_cost }}</h2>
+        {% endif %}
+    </div>
+</body>
+</html>
